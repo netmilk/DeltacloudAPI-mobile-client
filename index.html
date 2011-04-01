@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>PhoneGap</title>
+	  <link rel="stylesheet" href="jquery.mobile-1.0a3.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	  <script type="text/javascript" charset="utf-8" src="phonegap.0.9.4.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="jquery-1.5.1.min.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="jquery.mobile-1.0a3.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="jquery.tmpl.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="jquery.dump.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="base64.js"></script>
+	  <script type="text/javascript" charset="utf-8" src="api_credentials.js"></script>     
+	  <script type="text/javascript" charset="utf-8" src="main.js"></script>  
+  </head>
+  <body>
+  <div data-role="page" id="main-page"> 
+    <div data-role="header">
+      <h1>Overview</h1>
+    </div> 
+    <div data-role="content">
+        <a href="#instances" data-role="button" onclick="fill_instances()">Instances</a> 
+        <a href="index.html" data-role="button">Images</a> 
+        <a href="index.html" data-role="button">Hardware profiles</a> 
+        <a href="index.html" data-role="button">Realms</a> 
+    </div> 
+    <div data-role="footer">
+      <h4>DeltacloudAPI client</h4>
+    </div> 
+  </div> 
+
+  <div data-role="page" id="instances"> 
+    <div data-role="header">
+      <h1>Instances</h1>
+    </div> 
+    <div data-role="content">
+      <a href="#" data-role="button" onclick="fill_instances(); return false;">Refresh</a> 
+      <div id="dapi-instances">
+      </div>
+    </div> 
+    <div data-role="footer">
+      <h4>DeltacloudAPI client</h4>
+    </div> 
+  </div> 
+
+  <script id="template-instance" type="text/x-jquery-tmpl">
+    <div data-role="collapsible" class="dapi-instance" data-collapsed="true">
+    <h3>${name}</h3>
+    <h4>state: ${state}</h4>
+    <h4>id: ${id}</h4>
+    <h4>image_id: ${image.id}</h4>
+    <h4>realm_id: ${realm.id}</h4>
+    <h4>hwp_id: ${hardware_profile.id}</h4>
+
+    <div data-role="controlgroup">
+      {{each actions.link}}
+        <a href="index.html" data-role="button">${$value.rel}</a>
+      {{/each}}
+    </div>
+  </script>
+  </body>
+</html>
