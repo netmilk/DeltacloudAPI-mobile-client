@@ -1,16 +1,5 @@
-  body {
-    background:#222 none repeat scroll 0 0;
-    color:#666;
-    font-family:Helvetica;
-    font-size:72%;
-    line-height:1.5em;
-    margin:0;
-    border-top:1px solid #393939;
-  }
-
-  .footer-logo{
-    text-align: center;
-    padding-top: 7px;
-    padding-bottom: 4px;
-    
-  }
+.footer-logo{
+  text-align: center;
+  padding-top: 7px;
+  padding-bottom: 4px;
+}
