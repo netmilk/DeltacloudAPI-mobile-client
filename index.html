@@ -17,15 +17,34 @@
 	  <script type="text/javascript" charset="utf-8" src="javascripts/main.js"></script>  
   </head>
   <body>
+
   <div data-role="page" id="main-page"> 
     <div data-role="header">
       <h1>Deltacloud API</h1>
     </div> 
+
+    <div data-role="content">
+        <a href="#main-menu" data-role="button">Connect</a> 
+    </div> 
+    <div data-role="footer">
+      <div class="footer-logo">
+        <img src="images/virtualmaster-logo.png" alt="virtualmaster logo"/>
+      </div>
+    </div> 
+
+  </div> 
+
+  <div data-role="page" id="main-menu"> 
+    <div data-role="header">
+      <h1>Deltacloud API</h1>
+    </div> 
+
     <div data-role="content">
         <a href="#instances" data-role="button">Instances</a> 
         <a href="#images" data-role="button">Images</a> 
-        <a href="index.html" data-role="button">Hardware profiles</a> 
-        <a href="index.html" data-role="button">Realms</a> 
+        <a href="#realms" data-role="button">Realms</a> 
+        <a href="#hardware_profiles" data-role="button">Hardware profiles</a> 
+        <a href="#create-instance" data-role="button">Create instance</a> 
     </div> 
     <div data-role="footer">
       <div class="footer-logo">
@@ -35,18 +54,9 @@
   </div> 
 
   <div data-role="page" id="instances"> 
-    <div data-role="header"data-position="fixed">
+    <div data-role="header">
       <h1>Instances</h1>
     </div> 
-
-    <div data-role="content" class="ajax-loader" data-theme="a" style="display: none">
-      <h1>
-        Loading
-        <img src="images/ajax-loader.png" alt="ajax-loader" class="spin" style="float: right;"/>
-        <div style="clear: both"/>
-      </h1>
-    </div>
-
     <div data-role="content">
       <div id="dapi-instances">
       </div>
@@ -54,20 +64,14 @@
     <div data-role="footer" class="ui-bar">
       <a href="#" data-role="button" onclick="fill_instances();">Refresh</a> 
     </div>
-        
   </div> 
+
+
 
   <div data-role="page" id="images"> 
     <div data-role="header">
       <h1>Images</h1>
     </div> 
-    <div data-role="content" class="ajax-loader" data-theme="a" style="display: none">
-      <h1>
-        Loading
-        <img src="images/ajax-loader.png" alt="ajax-loader" class="spin" style="float: right;"/>
-        <div style="clear: both"/>
-      </h1>
-    </div>
 
     <div data-role="content">
       <div id="dapi-images">
@@ -78,6 +82,56 @@
     </div>
   </div> 
 
+  <div data-role="page" id="realms"> 
+    <div data-role="header">
+      <h1>Realms</h1>
+    </div> 
+
+    <div data-role="content">
+      <div id="dapi-realms">
+      </div>
+    </div> 
+    <div data-role="footer" class="ui-bar">
+      <a href="#" data-role="button" onclick="fill_realms();">Refresh</a> 
+    </div>
+  </div> 
+
+
+  <div data-role="page" id="hardware_profiles"> 
+    <div data-role="header">
+      <h1>Hardware profiles</h1>
+    </div> 
+
+    <div data-role="content">
+      <div id="dapi-hardware_profiles">
+      </div>
+    </div> 
+    <div data-role="footer" class="ui-bar">
+      <a href="#" data-role="button" onclick="fill_hardware_profiles();">Refresh</a> 
+    </div>
+  </div> 
+
+  <div data-role="page" id="create-instance"> 
+    <div data-role="header">
+      <h1>Create instance</h1>
+    </div> 
+
+    <div data-role="content">
+      <form action="form.php" method="post">
+        <div data-role="fieldcontain">
+          <label for="name">Name:</label>
+          <input type="text" name="name" id="name" value=""  />
+          <label for="image_id">Image:</label>
+          <input type="text" name="image_id" id="name" value=""  />
+          <label for="hwp_id">Hardware profile:</label>
+          <input type="text" name="hwp_id" id="name" value=""  />
+          <label for="realm_id">Realm:</label>
+          <input type="text" name="realm_id" id="name" value=""  />
+        </div>  
+        <input type="submit" value="Create" />                
+      </form> 
+    </div> 
+  </div> 
 
 
   <script id="template-instance" type="text/x-jquery-tmpl">
@@ -90,9 +144,26 @@
     <h4>hwp_id: ${hardware_profile.id}</h4>
 
     <div data-role="controlgroup">
-      {{each actions.link}}
-        <a href="index.html" data-role="button">${$value.rel}</a>
+      {{each(index,action) actions}}
+        <a href="#" data-role="button" onclick="api.instance(${id}).${action}()">${action}</a>
       {{/each}}
+    </div>
+  </script>
+
+  <script id="template-hardware_profile" type="text/x-jquery-tmpl">
+    <div data-role="collapsible" class="dapi-hardware_profile" data-collapsed="true">
+      <h3>${id}</h3>
+      {{each property}}
+        <h4>${$value.name}: ${$value.value}</h4>
+      {{/each}}
+    </div>
+
+  </script>
+
+  <script id="template-realm" type="text/x-jquery-tmpl">
+    <div data-role="collapsible" class="dapi-realm" data-collapsed="true">
+      <h3>${name}</h3>
+      <h4>State: ${state}</h4>
     </div>
   </script>
 
